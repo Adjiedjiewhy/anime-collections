@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { Primary } from "../styles/variables/colors";
 
 const Pagination: React.FC<any> = ({
   currentPage,
@@ -8,9 +10,14 @@ const Pagination: React.FC<any> = ({
 }) => {
   const handlePageChange = (page: any) => {
     if (page >= 1 && page <= totalPages) {
-      onPageChange(page);
+    //   onPageChange(page); WIP
+    console.log("AAAAA")
     }
   };
+
+  if (totalPages > 10) {
+    totalPages = 5;
+  }
 
   return (
     <PaginationContainer>
@@ -18,7 +25,7 @@ const Pagination: React.FC<any> = ({
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
       >
-        Previous
+        <IoIosArrowBack />
       </PageButton>
       {Array.from({ length: totalPages }, (_, index) => index + 1).map(
         (page) => (
@@ -35,7 +42,7 @@ const Pagination: React.FC<any> = ({
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
       >
-        Next
+        <IoIosArrowForward />
       </PageButton>
     </PaginationContainer>
   );
@@ -48,17 +55,23 @@ const PaginationContainer = styled.div`
 `;
 
 const PageButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
   padding: 8px;
   margin-right: 8px;
-  font-size: 14px;
-  color: #333;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 50%; /* Updated styling */
+  font-size: 20px;
+  color: ${Primary.light};
+  background-color: ${Primary.base};
+  border: 0px;
+  border-radius: 50%;
   cursor: pointer;
 
   &:hover {
-    background-color: #f5f5f5;
+    background-color: ${Primary.light};
+    color: ${Primary.dark};
   }
 
   &:focus {

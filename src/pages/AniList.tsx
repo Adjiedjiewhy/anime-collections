@@ -16,7 +16,7 @@ function AniList() {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
-
+  console.log("Data:", data)
   return (
     <main>
       {/* <ListHeader>
@@ -27,7 +27,7 @@ function AniList() {
           />
         </ListForm>
       </ListHeader> */}
-      <Pagination currentPage={data.Page.pageInfo.currentPage} totalPages={data.Page.pageInfo.totalPages} onPageChange={""}/>
+      <Pagination currentPage={data.Page.pageInfo.currentPage} totalPages={data.Page.pageInfo.total} onPageChange={""}/>
       <List>
         {data.Page.media.map((anime: any) => (
           <ListCard>

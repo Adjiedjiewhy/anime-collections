@@ -14,8 +14,6 @@ function AniDetails() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  console.log("Data:", data)
-
   return (
     <MovieDetailContainer>
       <MovieBanner src={data.Media.bannerImage} alt="Movie Banner" />
@@ -39,7 +37,7 @@ function AniDetails() {
         </MovieInfoItem>
       </MovieInfo>
       <MovieDescription>
-        {data.Media.bannerImage}
+        {data.Media.description}
       </MovieDescription>
     </MovieDetailContainer>
   );

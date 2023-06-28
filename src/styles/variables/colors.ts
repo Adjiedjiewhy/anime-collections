@@ -1,7 +1,7 @@
 export const Primary = {
     base: "#912f2f",
     light: "#e39d9d",
-    dark: "#4f0e0e",
+    dark: "#330808",
     highlight: "#f2dada"
 }
 
