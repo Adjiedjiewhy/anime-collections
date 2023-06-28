@@ -2,19 +2,19 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { GET_ANIME_BY_ID } from "../models/queries";
 import { useLocation } from "react-router-dom";
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 function AniDetails() {
   const { loading, error, data } = useQuery(GET_ANIME_BY_ID, {
     variables: {
-      id: useLocation().state.id,
+        id: useLocation().state.id
     },
   });
-
+  
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  console.log("Data:", data);
+  console.log("Data:", data)
 
   return (
     <MovieDetailContainer>
@@ -38,7 +38,9 @@ function AniDetails() {
           <InfoValue>{data.Media.duration} minutes</InfoValue>
         </MovieInfoItem>
       </MovieInfo>
-      <MovieDescription>{data.Media.description}</MovieDescription>
+      <MovieDescription>
+        {data.Media.bannerImage}
+      </MovieDescription>
     </MovieDetailContainer>
   );
 }
@@ -90,5 +92,6 @@ const MovieDescription = styled.p`
   text-align: justify;
   line-height: 1.5;
 `;
+
 
 export default AniDetails;

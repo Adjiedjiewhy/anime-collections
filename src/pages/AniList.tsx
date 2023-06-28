@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { useQuery } from "@apollo/client";
 import { GET_TOP_ANIMES } from "../models/queries";
 import Card from "../components/Card";
+import Pagination from "../components/Pagination";
 
 import { Link } from "react-router-dom";
 
@@ -26,6 +27,7 @@ function AniList() {
           />
         </ListForm>
       </ListHeader> */}
+      <Pagination currentPage={data.Page.pageInfo.currentPage} totalPages={data.Page.pageInfo.totalPages} onPageChange={""}/>
       <List>
         {data.Page.media.map((anime: any) => (
           <ListCard>
