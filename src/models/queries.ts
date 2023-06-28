@@ -12,15 +12,11 @@ export const GET_TOP_ANIMES = gql`
       }
       media(sort: POPULARITY_DESC) {
         id
-        genres
         title {
-          romaji
           english
-          native
         }
         coverImage {
           large
-          medium
         }
       }
     }
@@ -54,8 +50,8 @@ export const GET_ANIME_BY_ID = gql`
         day
       }
       description
+      bannerImage
       coverImage {
-        extraLarge
         large
         medium
       }

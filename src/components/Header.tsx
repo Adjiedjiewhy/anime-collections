@@ -1,6 +1,7 @@
-import React from 'react';
-import styled from '@emotion/styled';
-import { Primary } from '../styles/variables/colors';
+import React from "react";
+import styled from "@emotion/styled";
+import { Primary } from "../styles/variables/colors";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -8,11 +9,15 @@ const Header = () => {
       <Title>AniColle</Title>
       <nav>
         <NavList>
-          <NavItem>
-            <NavLink>Anime List</NavLink>
+        <NavItem>
+            <Link to={"/"} style={{ textDecoration: 'none' }}>
+              <NavLink>List</NavLink>
+            </Link>
           </NavItem>
           <NavItem>
-            <NavLink>Collections</NavLink>
+            <Link to={"/collections"} style={{ textDecoration: 'none' }}>
+              <NavLink>Collections</NavLink>
+            </Link>
           </NavItem>
         </NavList>
       </nav>

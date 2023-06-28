@@ -4,17 +4,15 @@ import styled from "@emotion/styled";
 const Card: React.FC<any> = ({ anime }) => {
   return (
     <CardContainer>
-      <Anchor href="">
-        <Figure>
-          <Image src={anime.coverImage.large} />
-          <h3>{anime.title.english}</h3>
-        </Figure>
-      </Anchor>
+      <Figure>
+        <Image src={anime.coverImage.large} />
+        <Title>{anime.title.english}</Title>
+      </Figure>
     </CardContainer>
   );
 };
 
-const CardContainer = styled.article`
+const CardContainer = styled.div`
   flex: 1 1 33.333%;
   max-width: 33.333%;
   padding: 16px 8px;
@@ -26,11 +24,6 @@ const CardContainer = styled.article`
       }
     }
   }
-`;
-
-const Anchor = styled.a`
-  text-decoration: none;
-  color: white;
 `;
 
 const Figure = styled.figure`
@@ -45,6 +38,12 @@ const Image = styled.img`
   border-radius: 10px;
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.15);
   transition: 0.25s;
+`;
+
+const Title = styled.p`
+  color: white;
+  font-weight: bold;
+  font-size: 16px
 `;
 
 export default Card;

@@ -3,6 +3,8 @@ import { useQuery } from "@apollo/client";
 import { GET_TOP_ANIMES } from "../models/queries";
 import Card from "../components/Card";
 
+import { Link } from "react-router-dom";
+
 function AniList() {
   const { loading, error, data } = useQuery(GET_TOP_ANIMES, {
     variables: {
@@ -27,9 +29,9 @@ function AniList() {
       <List>
         {data.Page.media.map((anime: any) => (
           <ListCard>
-            <Card
-              anime={anime}
-            />
+            <Link to={"/details"} style={{ textDecoration: "none" }} state={{id: anime.id}}>
+              <Card anime={anime} />
+            </Link>
           </ListCard>
         ))}
       </List>
