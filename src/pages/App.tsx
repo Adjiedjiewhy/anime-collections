@@ -1,3 +1,4 @@
+import { Routes, Route } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client";
 import anilistClient from "../clients/anilistClient";
 import "../styles/App.css";
