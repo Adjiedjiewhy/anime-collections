@@ -1,23 +1,39 @@
-import React from "react";
+import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_ANIME_BY_ID } from "../models/queries";
 import { useLocation } from "react-router-dom";
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
+import { IoIosAdd, IoIosList } from "react-icons/io";
+import { Primary } from "../styles/variables/colors";
 
 function AniDetails() {
+  const [modal, setModal] = useState(false);
+
+  const toggleModal = () =>{
+    setModal(!modal);
+  }
+
   const { loading, error, data } = useQuery(GET_ANIME_BY_ID, {
     variables: {
-        id: useLocation().state.id
+      id: useLocation().state.id,
     },
   });
-  
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   return (
     <MovieDetailContainer>
       <MovieBanner src={data.Media.bannerImage} alt="Movie Banner" />
-      <MovieTitle>{data.Media.title.english}</MovieTitle>
+      <MovieTitle>
+        {data.Media.title.english}
+        <Icon onClick={toggleModal}>
+          <IoIosAdd />
+        </Icon>
+        <Icon>
+          <IoIosList />
+        </Icon>
+      </MovieTitle>
       <MovieInfo>
         <MovieInfoItem>
           <InfoLabel>Rating:</InfoLabel>
@@ -36,9 +52,7 @@ function AniDetails() {
           <InfoValue>{data.Media.duration} minutes</InfoValue>
         </MovieInfoItem>
       </MovieInfo>
-      <MovieDescription>
-        {data.Media.description}
-      </MovieDescription>
+      <MovieDescription>{data.Media.description}</MovieDescription>
     </MovieDetailContainer>
   );
 }
@@ -62,6 +76,23 @@ const MovieTitle = styled.h2`
   font-size: 28px;
   margin-bottom: 10px;
 `;
+
+const Icon = styled.span`
+  font-size: 24px;
+  vertical-align: middle;
+  margin-left: 8px;
+  transition: color 0.3s;
+
+  &:hover {
+    color: ${Primary.success};
+  }
+`;
+
+//ERASE THIS LATER
+// const PlusIcon = styled(IoIosAdd)`
+//   font-size: 24px;
+//   vertical-align: middle;
+// `;
 
 const MovieInfo = styled.div`
   display: flex;
@@ -90,6 +121,5 @@ const MovieDescription = styled.p`
   text-align: justify;
   line-height: 1.5;
 `;
-
 
 export default AniDetails;

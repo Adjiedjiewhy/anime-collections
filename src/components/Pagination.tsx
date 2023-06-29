@@ -1,24 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { Primary } from "../styles/variables/colors";
 
+
 const Pagination: React.FC<any> = ({
   currentPage,
-  totalPages,
-  onPageChange,
-  page,
-  setPage
+  setCurrentPage,
+  shownTotalPages,
+  setShownTotalPage,
+  totalPage,
+  setTotalPage
 }) => {
+  const [pageModifier, setPageModifier] = useState(0);
+
   const handlePageChange = (page: any) => {
-    if (page >= 1 && page <= totalPages) {
-      setPage(page)
+    if (page >= 1 && page <= totalPage) {
+      setCurrentPage(page);
     }
+    else console.log("No");
   };
 
-  if (totalPages > 5) {
-    totalPages = 5;
-  }
+  useEffect(() => {
+    if(currentPage > 3){
+      setPageModifier(currentPage - 3);
+    }
+    else{
+      setPageModifier(0);
+    }
+  }, [currentPage]);
 
   return (
     <PaginationContainer>
@@ -28,20 +38,22 @@ const Pagination: React.FC<any> = ({
       >
         <IoIosArrowBack />
       </PageButton>
-      {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+
+      {Array.from({ length: shownTotalPages }, (_, index) => index + 1).map(
         (page) => (
           <PageButton
             key={page}
-            onClick={() => handlePageChange(page)}
-            disabled={currentPage === page}
+            onClick={() => handlePageChange(page + pageModifier)}
+            disabled={currentPage === (page + pageModifier)}
           >
-            {page}
+            {page + pageModifier}
           </PageButton>
         )
       )}
+      
       <PageButton
         onClick={() => handlePageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
+        disabled={currentPage === totalPage}
       >
         <IoIosArrowForward />
       </PageButton>

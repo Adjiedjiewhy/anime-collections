@@ -2,17 +2,19 @@ import styled from "@emotion/styled";
 import { useQuery } from "@apollo/client";
 import { GET_TOP_ANIMES } from "../models/queries";
 import Card from "../components/Card";
-import Pagination from "../components/Pagination";
 
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-function AniList() {
-  const [page, setPage] = useState(0);
-
+const AniList: React.FC<any> = ({
+  currentPage,
+  totalPages,
+  setShownTotalPage,
+  setTotalPage
+}) => {
   const { loading, error, data } = useQuery(GET_TOP_ANIMES, {
     variables: {
-      page: page,
+      page: currentPage,
       perPage: 10,
     },
   });
@@ -20,9 +22,13 @@ function AniList() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
+  if(data.Page.pageInfo.total > 5){
+    setShownTotalPage(5);
+  }
+  setTotalPage(data.Page.pageInfo.total);
+
   return (
     <main>
-      <Pagination currentPage={data.Page.pageInfo.currentPage} totalPages={data.Page.pageInfo.total} page={page} setPage={setPage}/>
       <List>
         {data.Page.media.map((anime: any) => (
           <ListCard>
@@ -32,7 +38,6 @@ function AniList() {
           </ListCard>
         ))}
       </List>
-      <Pagination currentPage={data.Page.pageInfo.currentPage} totalPages={data.Page.pageInfo.total} page={page} setPage={setPage}/>
     </main>
   );
 }
