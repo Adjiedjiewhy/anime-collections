@@ -5,5 +5,6 @@ export const Primary = {
     highlight: "#f2dada",
     success: "#3ddb8f",
     failure: "#a11818",
-    link: "#58cefc"
+    link: "#58cefc",
+    background: "#141414"
 }

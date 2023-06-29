@@ -42,43 +42,6 @@ const AniList: React.FC<any> = ({
   );
 }
 
-const ListHeader = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px;
-`;
-
-const ListForm = styled.form`
-  display: flex;
-  justify-content: flex-end;
-  flex: 1 1 0%;
-`;
-
-const ListInput = styled.input`
-  appearance: none;
-  background: none;
-  border: none;
-
-  display: block;
-  width: 100%;
-  max-width: 400px;
-  padding: 16px;
-  border-radius: 999px;
-  background-color: #eee;
-
-  transition: 0.4s;
-
-  ::placeholder {
-    color: #888;
-  }
-
-  &:focus,
-  &:valid {
-    background-color: #313131;
-    color: #fff;
-  }
-`;
-
 const List = styled.div`
   display: flex;
   flex-wrap: wrap;

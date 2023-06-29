@@ -5,13 +5,14 @@ import { useLocation } from "react-router-dom";
 import styled from "@emotion/styled";
 import { IoIosAdd, IoIosList } from "react-icons/io";
 import { Primary } from "../styles/variables/colors";
+import Modal from "../components/Modal";
 
 function AniDetails() {
   const [modal, setModal] = useState(false);
 
-  const toggleModal = () =>{
+  const toggleModal = () => {
     setModal(!modal);
-  }
+  };
 
   const { loading, error, data } = useQuery(GET_ANIME_BY_ID, {
     variables: {
@@ -53,6 +54,7 @@ function AniDetails() {
         </MovieInfoItem>
       </MovieInfo>
       <MovieDescription>{data.Media.description}</MovieDescription>
+      {modal && <Modal setModal={setModal}/>}
     </MovieDetailContainer>
   );
 }
