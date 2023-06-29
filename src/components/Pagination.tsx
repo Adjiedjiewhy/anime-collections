@@ -7,15 +7,16 @@ const Pagination: React.FC<any> = ({
   currentPage,
   totalPages,
   onPageChange,
+  page,
+  setPage
 }) => {
   const handlePageChange = (page: any) => {
     if (page >= 1 && page <= totalPages) {
-    //   onPageChange(page); WIP
-    console.log("AAAAA")
+      setPage(page)
     }
   };
 
-  if (totalPages > 10) {
+  if (totalPages > 5) {
     totalPages = 5;
   }
 

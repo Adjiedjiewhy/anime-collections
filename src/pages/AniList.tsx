@@ -5,29 +5,24 @@ import Card from "../components/Card";
 import Pagination from "../components/Pagination";
 
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function AniList() {
+  const [page, setPage] = useState(0);
+
   const { loading, error, data } = useQuery(GET_TOP_ANIMES, {
     variables: {
-      page: 1,
+      page: page,
       perPage: 10,
     },
   });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
-  console.log("Data:", data)
+
   return (
     <main>
-      {/* <ListHeader>
-        <ListForm>
-          <ListInput
-            type="search"
-            placeholder="Search for Anime, Manga, and more..."
-          />
-        </ListForm>
-      </ListHeader> */}
-      <Pagination currentPage={data.Page.pageInfo.currentPage} totalPages={data.Page.pageInfo.total} onPageChange={""}/>
+      <Pagination currentPage={data.Page.pageInfo.currentPage} totalPages={data.Page.pageInfo.total} page={page} setPage={setPage}/>
       <List>
         {data.Page.media.map((anime: any) => (
           <ListCard>
@@ -37,6 +32,7 @@ function AniList() {
           </ListCard>
         ))}
       </List>
+      <Pagination currentPage={data.Page.pageInfo.currentPage} totalPages={data.Page.pageInfo.total} page={page} setPage={setPage}/>
     </main>
   );
 }
