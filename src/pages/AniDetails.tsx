@@ -8,11 +8,40 @@ import { Primary } from "../styles/variables/colors";
 import ModalAdd from "../components/ModalAdd";
 import ModalCreate from "../components/ModalCreate";
 import { Colle, ColleContent } from "../models/interfaces";
+import { useNavigate } from "react-router-dom";
 
 function AniDetails() {
+  const [animeId, setAnimeId] = useState(useLocation().state.id);
   const [modal, setModal] = useState(false);
   const [createModal, setCreateModal] = useState(false);
   const [colleData, setColleData] = useState(Array());
+  const [collections, setCollections] = useState<Colle[]>([]);
+  const [animes, setAnimes] = useState<Colle>({
+    id: "",
+    name: "",
+    image: "",
+    data: [],
+  });
+  const navigation = useNavigate();
+
+  useEffect(() => {
+    const storage = window.localStorage.getItem("colleList");
+    if (storage !== null || storage != undefined) {
+      let tempArr = JSON.parse(storage);
+      const tempColle: Colle[] = [];
+      console.log("tempArr", tempArr);
+      tempArr.forEach((item1: Colle) => {
+        if (
+          item1.data.findIndex((item2: ColleContent) => item2.id === animeId) >
+          -1
+        ) {
+          tempColle.push(item1);
+        }
+      });
+      console.log("tempColle:", tempColle);
+      setCollections(tempColle);
+    }
+  }, []);
 
   const toggleModal = () => {
     setModal(!modal);
@@ -43,6 +72,12 @@ function AniDetails() {
     }
   };
 
+  const handleCollectionDetail = (name: any) =>{
+    if (name !== undefined) {
+      navigation("/colleDetails", { state: { id: name } });
+    }
+  }
+
   const { loading, error, data } = useQuery(GET_ANIME_BY_ID, {
     variables: {
       id: useLocation().state.id,
@@ -64,18 +99,23 @@ function AniDetails() {
           <IoIosList />
         </Icon>
       </MovieTitle>
+      <MovieInfoItem>
+        {data.Media.genres.map((genre: any) => (
+          <PillDiv>{genre}</PillDiv>
+        ))}
+      </MovieInfoItem>
       <MovieInfo>
         <MovieInfoItem>
           <InfoLabel>Rating:</InfoLabel>
           <InfoValue>{data.Media.averageScore}/100</InfoValue>
         </MovieInfoItem>
         <MovieInfoItem>
-          <InfoLabel>Genre:</InfoLabel>
-          <InfoValue>{data.Media.genres}</InfoValue>
+          <InfoLabel>Status:</InfoLabel>
+          <InfoValue>{data.Media.status}</InfoValue>
         </MovieInfoItem>
         <MovieInfoItem>
-          <InfoLabel>Release Date:</InfoLabel>
-          <InfoValue>WIP</InfoValue>
+          <InfoLabel>Episodes:</InfoLabel>
+          <InfoValue>{data.Media.episodes}</InfoValue>
         </MovieInfoItem>
         <MovieInfoItem>
           <InfoLabel>Duration:</InfoLabel>
@@ -83,6 +123,14 @@ function AniDetails() {
         </MovieInfoItem>
       </MovieInfo>
       <MovieDescription>{data.Media.description}</MovieDescription>
+      {collections.length > 0 && (
+        <div>
+          You've added this Anime to these collections:
+          {collections.map((card: any) => (
+            <ResponsivePillDiv onClick={() => handleCollectionDetail(card.name)}>{card.name}</ResponsivePillDiv>
+          ))}
+        </div>
+      )}
       {modal && (
         <ModalAdd
           setModal={setModal}
@@ -93,10 +141,7 @@ function AniDetails() {
         />
       )}
       {createModal && (
-        <ModalCreate
-        setModal={setCreateModal}
-        animeData={data.Media}
-        />
+        <ModalCreate setModal={setCreateModal} animeData={data.Media} />
       )}
     </MovieDetailContainer>
   );
@@ -142,6 +187,7 @@ const MovieInfo = styled.div`
 
 const MovieInfoItem = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   margin-right: 20px;
 `;
@@ -159,6 +205,30 @@ const MovieDescription = styled.p`
   font-size: 16px;
   text-align: justify;
   line-height: 1.5;
+`;
+
+const PillDiv = styled.div`
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px; /* A large enough value to create a pill shape */
+  background-color: ${Primary.foreground}; /* Blue color */
+  margin: 5px 3px;
+  color: white;
+`;
+
+const ResponsivePillDiv = styled.div`
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px; /* A large enough value to create a pill shape */
+  background-color: ${Primary.foreground}; /* Blue color */
+  margin: 5px 3px;
+  color: white;
+
+  &:hover {
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
+    transform: scale(1.025);
+    background-color: ${Primary.base}
+  }
 `;
 
 export default AniDetails;
