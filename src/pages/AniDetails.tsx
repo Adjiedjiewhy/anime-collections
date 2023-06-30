@@ -36,7 +36,9 @@ function AniDetails() {
       tempData[dataIndex] = item;
     });
 
-    window.localStorage.setItem("colleList", JSON.stringify(tempData));
+    if (tempData !== null || tempData != undefined) {
+      window.localStorage.setItem("colleList", JSON.stringify(tempData));
+    }
   };
 
   const { loading, error, data } = useQuery(GET_ANIME_BY_ID, {
