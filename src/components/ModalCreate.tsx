@@ -11,7 +11,6 @@ const ModalCreate: React.FC<any> = ({ data, setData, setModal, imageSrc }) => {
 
   useEffect(() => {
     if (data !== null || data != undefined) {
-      console.log("Arr:", data);
       window.localStorage.setItem("colleList", JSON.stringify(data));
     }
   }, [data]);
@@ -28,7 +27,6 @@ const ModalCreate: React.FC<any> = ({ data, setData, setModal, imageSrc }) => {
       image: imageSrc ? imageSrc : defaultCoverImage,
       data: [],
     };
-    console.log("Arr:", newData);
     setData([...data, newData]);
   };
 

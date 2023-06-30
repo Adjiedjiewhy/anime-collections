@@ -4,7 +4,7 @@ import { Primary } from "../styles/variables/colors";
 
 const AniCard: React.FC<any> = ({ cardId, cardTitle, cardImage, handleClick }) => {
   return (
-    <Card onClick={() => handleClick(cardId)}>
+    <Card onClick={() => handleClick(cardId, cardTitle)}>
       <CardImage src={cardImage} alt="Card Image" />
       <CardTitle>
         {cardTitle}

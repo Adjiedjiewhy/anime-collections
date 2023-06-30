@@ -11,10 +11,8 @@ const ModalAdd: React.FC<any> = ({ setModal, handleAddAnime, colleData, setColle
   useEffect(() => {
     const data = window.localStorage.getItem("colleList");
     if (data !== null) {
-      console.log("Not Null");
       setColleData(JSON.parse(data));
     }
-    else console.log("Null");
   }, []);
 
   const handleChange = (data: any) => {
@@ -23,11 +21,9 @@ const ModalAdd: React.FC<any> = ({ setModal, handleAddAnime, colleData, setColle
     } else {
       collections.splice(collections.indexOf(data), 1);
     }
-    console.log("Colle:", collections)
   };
 
   const handleSubmit = () => {
-    console.log("submit!");
     handleAddAnime(collections);
     // window.localStorage.setItem("dwad", JSON.stringify(storage));
     setModal(false);

@@ -20,9 +20,9 @@ function ColleList() {
     }
   }, []);
 
-  const handleClick = (data: any) => {
-    if (data !== undefined) {
-      navigation("/colleDetails", { state: { id: data } });
+  const handleClick = (id: any, name: any) => {
+    if (name !== undefined) {
+      navigation("/colleDetails", { state: { id: name } });
     }
   };
 

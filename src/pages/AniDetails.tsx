@@ -16,17 +16,8 @@ function AniDetails() {
     setModal(!modal);
   };
 
-  useEffect(() => {
-    console.log("Update Data:", colleData.length);
-    if (colleData.length > 0) {
-      console.log("FUCK");
-      window.localStorage.setItem("colleList", JSON.stringify(colleData));
-    }
-  }, [colleData]);
-
   const handleAddAnime = (collections: Colle[]) => {
     let tempData = colleData;
-    console.log("Add Anime to:", collections);
     collections.forEach((item) => {
       const anime: ColleContent = {
         id: data.Media.id,
@@ -37,7 +28,6 @@ function AniDetails() {
       if (item.data.length < 1) {
         item.image = data.Media.coverImage.large;
       } else {
-        console.log("Nope:", item.data.length);
       }
       item.data.push(anime);
       let dataIndex = tempData.findIndex(
@@ -46,8 +36,7 @@ function AniDetails() {
       tempData[dataIndex] = item;
     });
 
-    console.log("Colle:", tempData);
-    setColleData(tempData);
+    window.localStorage.setItem("colleList", JSON.stringify(tempData));
   };
 
   const { loading, error, data } = useQuery(GET_ANIME_BY_ID, {

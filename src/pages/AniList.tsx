@@ -35,20 +35,6 @@ const AniList: React.FC<any> = ({
 
   return (
     <main>
-      {/* <List>
-        {data.Page.media.map((anime: any) => (
-          <ListCard>
-            <Link to={"/details"} style={{ textDecoration: "none" }} state={{id: anime.id}}>
-              <Card anime={anime} />
-            </Link>
-          </ListCard>
-        ))}
-      </List> */}
-      {/* <CardListContainer>
-        {cards.map((card) => (
-          <AniCard cardTitle={card.title} cardImage={card.image} />
-        ))}
-      </CardListContainer> */}
       <CardListContainer>
         {cardData.map((card: any) => (
           <AniCard
