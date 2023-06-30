@@ -3,9 +3,9 @@ import styled from "@emotion/styled";
 import { useEffect } from "react";
 import { Primary } from "../styles/variables/colors";
 
-const AniCard: React.FC<any> = ({ cardTitle, cardImage }) => {
+const AniCard: React.FC<any> = ({ cardId, cardTitle, cardImage, handleClick }) => {
   return (
-    <Card>
+    <Card onClick={() => handleClick(cardId)}>
       <CardImage src={cardImage} alt="Card Image 1" />
       <CardTitle>
         {cardTitle}
