@@ -6,5 +6,6 @@ export const Primary = {
     success: "#3ddb8f",
     failure: "#a11818",
     link: "#58cefc",
-    background: "#141414"
+    background: "#141414",
+    foreground: "#28292b"
 }
