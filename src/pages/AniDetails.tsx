@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_ANIME_BY_ID } from "../models/queries";
 import { useLocation } from "react-router-dom";
@@ -6,12 +6,48 @@ import styled from "@emotion/styled";
 import { IoIosAdd, IoIosList } from "react-icons/io";
 import { Primary } from "../styles/variables/colors";
 import ModalAdd from "../components/ModalAdd";
+import { Colle, ColleContent } from "../models/interfaces";
 
 function AniDetails() {
   const [modal, setModal] = useState(false);
+  const [colleData, setColleData] = useState(Array());
 
   const toggleModal = () => {
     setModal(!modal);
+  };
+
+  useEffect(() => {
+    console.log("Update Data:", colleData.length);
+    if (colleData.length > 0) {
+      console.log("FUCK");
+      window.localStorage.setItem("colleList", JSON.stringify(colleData));
+    }
+  }, [colleData]);
+
+  const handleAddAnime = (collections: Colle[]) => {
+    let tempData = colleData;
+    console.log("Add Anime to:", collections);
+    collections.forEach((item) => {
+      const anime: ColleContent = {
+        id: data.Media.id,
+        title: data.Media.title.english,
+        coverImage: data.Media.coverImage.large,
+      };
+
+      if (item.data.length < 1) {
+        item.image = data.Media.coverImage.large;
+      } else {
+        console.log("Nope:", item.data.length);
+      }
+      item.data.push(anime);
+      let dataIndex = tempData.findIndex(
+        (element) => element.name === item.name
+      );
+      tempData[dataIndex] = item;
+    });
+
+    console.log("Colle:", tempData);
+    setColleData(tempData);
   };
 
   const { loading, error, data } = useQuery(GET_ANIME_BY_ID, {
@@ -54,7 +90,14 @@ function AniDetails() {
         </MovieInfoItem>
       </MovieInfo>
       <MovieDescription>{data.Media.description}</MovieDescription>
-      {modal && <ModalAdd setModal={setModal}/>}
+      {modal && (
+        <ModalAdd
+          setModal={setModal}
+          handleAddAnime={handleAddAnime}
+          colleData={colleData}
+          setColleData={setColleData}
+        />
+      )}
     </MovieDetailContainer>
   );
 }

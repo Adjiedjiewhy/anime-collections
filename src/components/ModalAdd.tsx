@@ -5,30 +5,31 @@ import { Primary } from "../styles/variables/colors";
 import { IoIosAdd } from "react-icons/io";
 import { useState, useEffect } from "react";
 
-const ModalAdd: React.FC<any> = ({ setModal }) => {
-  const [array, setArray] = useState(Array());
-  let storage = Array();
+const ModalAdd: React.FC<any> = ({ setModal, handleAddAnime, colleData, setColleData }) => {
+  let collections = Array();
 
   useEffect(() => {
     const data = window.localStorage.getItem("colleList");
     if (data !== null) {
       console.log("Not Null");
-      setArray(JSON.parse(data));
+      setColleData(JSON.parse(data));
     }
     else console.log("Null");
   }, []);
 
   const handleChange = (data: any) => {
-    if (storage.indexOf(data)) {
-      storage.push(data);
+    if (collections.indexOf(data)) {
+      collections.push(data);
     } else {
-      storage.splice(storage.indexOf(data), 1);
+      collections.splice(collections.indexOf(data), 1);
     }
+    console.log("Colle:", collections)
   };
 
   const handleSubmit = () => {
     console.log("submit!");
-    window.localStorage.setItem("dwad", JSON.stringify(storage));
+    handleAddAnime(collections);
+    // window.localStorage.setItem("dwad", JSON.stringify(storage));
     setModal(false);
   };
 
@@ -48,7 +49,7 @@ const ModalAdd: React.FC<any> = ({ setModal }) => {
                 <PlusIcon />
                 <ContentText>Create a new collection</ContentText>
               </CheckboxContainer>
-              {array.map((data: any) => (
+              {colleData.map((data: any) => (
                 <CheckboxContainer key={data.id}>
                   <Checkbox
                     type="checkbox"

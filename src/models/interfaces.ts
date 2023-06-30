@@ -3,10 +3,10 @@ export interface FormData {
 }
 
 export interface Colle {
-  colleId: string;
-  colleName: string;
-  colleCoverImage: string;
-  colleContent: ColleContent[];
+  id: string;
+  name: string;
+  image: string;
+  data: ColleContent[];
 }
 
 export interface ColleContent {
