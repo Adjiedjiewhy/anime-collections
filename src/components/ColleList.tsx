@@ -14,6 +14,7 @@ function ColleList() {
   const [modal, setModal] = useState(false);
   const [removeModal, setRemoveModal] = useState(false);
   const [cards, setCards] = useState(Array);
+  const [removeName, setRemoveName] = useState("");
 
   useEffect(() => {
     const data = window.localStorage.getItem("colleList");
@@ -24,7 +25,6 @@ function ColleList() {
 
   useEffect(() => {
     if (cards !== undefined && cards !== null && cards.length > 0) {
-      console.log("Data:", cards);
       window.localStorage.setItem("colleList", JSON.stringify(cards));
     }
   }, [cards]);
@@ -35,14 +35,12 @@ function ColleList() {
     }
   };
 
-  const handleRemove = (data: any) => {
+  const handleRemove = () => {
     let tempArr = cards;
     const removeIndex = tempArr.findIndex(
-      (element) => (element as any).name === data
+      (element) => (element as any).name === removeName
     );
-    console.log("TempArr:", tempArr);
     if (tempArr !== undefined && tempArr !== null && tempArr.length > 0) {
-      console.log("Data:", cards);
       tempArr.splice(removeIndex, 1);
       window.localStorage.setItem("colleList", JSON.stringify(tempArr));
       setCards(tempArr);
@@ -56,6 +54,11 @@ function ColleList() {
 
   const toggleModal = () => {
     setModal(!modal);
+  };
+
+  const handleRemoveName = (name: any) => {
+    setRemoveModal(true);
+    setRemoveName(name);
   };
 
   return (
@@ -74,7 +77,7 @@ function ColleList() {
             cardImage={card.image}
             handleClick={handleClick}
             removeBtn={true}
-            removeFunc={() => setRemoveModal(true)}
+            removeFunc={handleRemoveName}
           />
         ))}
       </CardListContainer>
@@ -83,7 +86,7 @@ function ColleList() {
       )}
       {removeModal && (
         <ModalRemove
-          setModal={setModal}
+          setModal={setRemoveModal}
           handleSubmit={handleRemove}
           handleCancel={() => setRemoveModal(false)}
         />

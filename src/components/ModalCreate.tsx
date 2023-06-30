@@ -13,10 +13,8 @@ const ModalCreate: React.FC<any> = ({ data, setData, setModal, animeData }) => {
 
   useEffect(() => {
     const storage = window.localStorage.getItem("colleList");
-    console.log("Storage:", storage);
     if (storage !== null && storage !== undefined) {
       setStorageData(JSON.parse(storage));
-      console.log("SD0:", storage);
     }
   }, []);
 
@@ -40,21 +38,15 @@ const ModalCreate: React.FC<any> = ({ data, setData, setModal, animeData }) => {
           ]
         : [],
     };
-    console.log("newData:", newData);
-    console.log("SD1", storageData);
+
     if (data !== undefined) {
-      console.log("1");
       setData([...data, newData]);
     } else if (storageData !== undefined && storageData !== null) {
-      console.log("2");
       storageData.push(newData);
-      console.log("SD2:", storageData);
       if (newData !== null && newData !== undefined) {
         window.localStorage.setItem("colleList", JSON.stringify(storageData));
       }
     } else {
-      console.log("3");
-      console.log("newData:", newData);
       if (newData !== null && newData !== undefined) {
         window.localStorage.setItem("colleList", JSON.stringify([newData]));
       }

@@ -18,7 +18,6 @@ const Pagination: React.FC<any> = ({
     if (page >= 1 && page <= totalPage) {
       setCurrentPage(page);
     }
-    else console.log("No");
   };
 
   useEffect(() => {

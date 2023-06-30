@@ -24,7 +24,6 @@ const ModalAdd: React.FC<any> = ({ setModal, handleAddAnime, colleData, setColle
   };
 
   const handleCreate = () =>{
-    console.log("Create");
     setModal(false);
     setCreateModal(true)
   }

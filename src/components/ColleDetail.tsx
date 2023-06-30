@@ -5,17 +5,23 @@ import AniCard from "./AniCard";
 import { useNavigate, useLocation } from "react-router-dom";
 import { IoPencil } from "react-icons/io5";
 import { Colle, ColleContent } from "../models/interfaces";
+import ModalRemove from "./ModalRemove";
+import defaultCoverImage from "../assets/defaultCoverImage.jpg";
 
 function ColleDetail() {
   const navigation = useNavigate();
   const [cards, setCards] = useState(Array());
-  const [anime, setAnime] = useState<Colle>({
+  const [removeModal, setRemoveModal] = useState(false);
+  const [animes, setAnimes] = useState<Colle>({
     id: "",
     name: "",
     image: "",
-    data: []
+    data: [],
   });
-  const id = useLocation().state.id
+  const [removeName, setRemoveName] = useState("");
+  const [collectionName] = useState(useLocation().state.id);
+
+  const id = useLocation().state.id;
 
   useEffect(() => {
     const data = window.localStorage.getItem("colleList");
@@ -26,23 +32,42 @@ function ColleDetail() {
 
   useEffect(() => {
     if (cards.length > 0) {
-      const tempArr = cards.find(element => element.name === id);
-      console.log("tempArr:", tempArr);
-      setAnime(tempArr);
+      const tempArr = cards.find((element) => element.name === id);
+      setAnimes(tempArr);
     }
   }, [cards]);
 
-  useEffect(() => {
-    console.log("Anime:", anime)
-  }, [anime]);
-
   const handleClick = (data: any) => {
-    console.log("Click!");
-    navigation("/details", { state: {id: data} });
+    navigation("/details", { state: { id: data } });
   };
 
   const handleEditName = () => {
     console.log("Edit Name!");
+  };
+
+  const handleRemove = () => {
+    let tempArr = animes;
+    let tempCards = cards;
+    const removeIndex = tempArr.data.findIndex(
+      (element) => (element as any).title === removeName
+    );
+    const collectionIndex = tempCards.findIndex(
+      (element) => element.name === collectionName
+    );
+    if (tempArr !== undefined && tempArr !== null && tempArr.data.length > 0) {
+      tempCards[collectionIndex].data.splice(removeIndex, 1);
+      if(tempCards[collectionIndex].data.length < 1){
+        tempCards[collectionIndex].image = defaultCoverImage;
+      }
+      setAnimes(tempArr);
+      window.localStorage.setItem("colleList", JSON.stringify(cards));
+      setRemoveModal(false);
+    }
+  };
+
+  const handleRemoveName = (name: any) => {
+    setRemoveModal(true);
+    setRemoveName(name);
   };
 
   return (
@@ -54,15 +79,24 @@ function ColleDetail() {
         </EditIcon>
       </CollectionName>
       <CardListContainer>
-        {anime.data.map((card: any) => (
+        {animes.data.map((card: any) => (
           <AniCard
             cardId={card.id}
             cardTitle={card.title}
             cardImage={card.coverImage}
             handleClick={handleClick}
+            removeBtn={true}
+            removeFunc={handleRemoveName}
           />
         ))}
       </CardListContainer>
+      {removeModal && (
+        <ModalRemove
+          setModal={setRemoveModal}
+          handleSubmit={handleRemove}
+          handleCancel={() => setRemoveModal(false)}
+        />
+      )}
     </div>
   );
 }
