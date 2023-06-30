@@ -6,6 +6,8 @@ import { IoIosAdd } from "react-icons/io";
 import { useState, useEffect } from "react";
 import defaultCoverImage from "../assets/defaultCoverImage.jpg";
 import { Colle, ColleContent } from "../models/interfaces";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ModalCreate: React.FC<any> = ({ data, setData, setModal, animeData }) => {
   const [input, setInput] = useState("");
@@ -25,9 +27,30 @@ const ModalCreate: React.FC<any> = ({ data, setData, setModal, animeData }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-    if (format.test(input)) {
-      console.log("NO SPECIAL CHARS");
-      setModal(false);
+
+    if (storageData.findIndex((element) => element.name === input) > -1) {
+      toast.error("A collection with that name already exist!", {
+        position: "bottom-center",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+    else if (format.test(input)) {
+      toast.error("Collection name must not contain special characters!", {
+        position: "bottom-center",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } else {
       let newData = {
         id: data ? data.length : storageData ? storageData.length : 0,
@@ -95,6 +118,18 @@ const ModalCreate: React.FC<any> = ({ data, setData, setModal, animeData }) => {
           </ModalContainer>
         </form>
       </ModalContent>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </ModalBackdrop>
   );
 };
