@@ -3,7 +3,6 @@ import { useQuery } from "@apollo/client";
 import { GET_TOP_ANIMES } from "../models/queries";
 import AniCard from "../components/AniCard";
 import { useNavigate  } from "react-router-dom";
-import { useState, useEffect } from "react";
 
 const AniList: React.FC<any> = ({
   currentPage,
@@ -11,7 +10,7 @@ const AniList: React.FC<any> = ({
   setShownTotalPage,
   setTotalPage,
 }) => {
-  const test = useNavigate();
+  const navigation = useNavigate();
   let cardData = Array();
 
   const { loading, error, data } = useQuery(GET_TOP_ANIMES, {
@@ -22,8 +21,7 @@ const AniList: React.FC<any> = ({
   });
 
   const handleClick = (data: any) => {
-    test("/details", { state: {id: data} });
-    
+    navigation("/details", { state: {id: data} });
   };
 
   if (loading) return <p>Loading...</p>;

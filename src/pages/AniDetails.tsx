@@ -90,12 +90,6 @@ const Icon = styled.span`
   }
 `;
 
-//ERASE THIS LATER
-// const PlusIcon = styled(IoIosAdd)`
-//   font-size: 24px;
-//   vertical-align: middle;
-// `;
-
 const MovieInfo = styled.div`
   display: flex;
   flex-wrap: wrap;

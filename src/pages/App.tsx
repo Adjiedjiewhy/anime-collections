@@ -9,6 +9,7 @@ import AniList from "./AniList";
 import AniDetails from "./AniDetails";
 import Pagination from "../components/Pagination";
 import ColleList from "../components/ColleList";
+import ColleDetail from "../components/ColleDetail";
 
 const App = () => {
   const [shownTotalPages, setShownTotalPage] = useState(0);
@@ -50,6 +51,7 @@ const App = () => {
         />
         <Route path="/details" element={<AniDetails />} />
         <Route path="/collections" element={<ColleList />} />
+        <Route path="/colleDetails" element={<ColleDetail />} />
         <Route path="*" element={<h1>No Such Page</h1>} />{" "}
       </Routes>
     </ApolloProvider>
