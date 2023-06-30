@@ -1,125 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { Primary } from "../styles/variables/colors";
 import AniCard from "./AniCard";
 import { useNavigate } from "react-router-dom";
 import { IoIosAdd } from "react-icons/io";
+import ModalCreate from "./ModalCreate";
+import defaultCoverImage from "../assets/defaultCoverImage.jpg"
 
 
 function ColleList() {
   const navigation = useNavigate();
+  const [modal, setModal] = useState(false);
+  const [cards, setCards] = useState(Array);
 
-  const [cards] = useState([
-    {
-      title: "Card-1a",
-      text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-    enim ad minim veniam, quis nostrud exercitation ullamco laboris
-    nisi ut aliquip ex ea commodo consequat.`,
-      image:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx16498-C6FPmWm59CyP.jpg",
-    },
-    {
-      title: "Card-2a",
-      text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-      enim ad minim veniam, quis nostrud exercitation ullamco laboris
-      nisi ut aliquip ex ea commodo consequat.`,
-      image:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx16498-C6FPmWm59CyP.jpg",
-    },
-    {
-      title: "Card-1a",
-      text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-    enim ad minim veniam, quis nostrud exercitation ullamco laboris
-    nisi ut aliquip ex ea commodo consequat.`,
-      image:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx16498-C6FPmWm59CyP.jpg",
-    },
-    {
-      title: "Card-2a",
-      text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-      enim ad minim veniam, quis nostrud exercitation ullamco laboris
-      nisi ut aliquip ex ea commodo consequat.`,
-      image:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx16498-C6FPmWm59CyP.jpg",
-    },
-    {
-      title: "Card-1a",
-      text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-    enim ad minim veniam, quis nostrud exercitation ullamco laboris
-    nisi ut aliquip ex ea commodo consequat.`,
-      image:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx16498-C6FPmWm59CyP.jpg",
-    },
-    {
-      title: "Card-2a",
-      text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-      enim ad minim veniam, quis nostrud exercitation ullamco laboris
-      nisi ut aliquip ex ea commodo consequat.`,
-      image:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx16498-C6FPmWm59CyP.jpg",
-    },
-    {
-      title: "Card-1a",
-      text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-    enim ad minim veniam, quis nostrud exercitation ullamco laboris
-    nisi ut aliquip ex ea commodo consequat.`,
-      image:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx16498-C6FPmWm59CyP.jpg",
-    },
-    {
-      title: "Card-2a",
-      text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-      enim ad minim veniam, quis nostrud exercitation ullamco laboris
-      nisi ut aliquip ex ea commodo consequat.`,
-      image:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx16498-C6FPmWm59CyP.jpg",
-    },
-    {
-      title: "Card-1a",
-      text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-    enim ad minim veniam, quis nostrud exercitation ullamco laboris
-    nisi ut aliquip ex ea commodo consequat.`,
-      image:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx16498-C6FPmWm59CyP.jpg",
-    },
-    {
-      title: "Card-2a",
-      text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-      enim ad minim veniam, quis nostrud exercitation ullamco laboris
-      nisi ut aliquip ex ea commodo consequat.`,
-      image:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx16498-C6FPmWm59CyP.jpg",
-    },
-    {
-      title: "Card-1a",
-      text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-    enim ad minim veniam, quis nostrud exercitation ullamco laboris
-    nisi ut aliquip ex ea commodo consequat.`,
-      image:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx16498-C6FPmWm59CyP.jpg",
-    },
-    {
-      title: "Card-2a",
-      text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-      enim ad minim veniam, quis nostrud exercitation ullamco laboris
-      nisi ut aliquip ex ea commodo consequat.`,
-      image:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx16498-C6FPmWm59CyP.jpg",
-      id: 1,
-    },
-  ]);
+  useEffect(() => {
+    const data = window.localStorage.getItem("colleList");
+    if (data !== null || data != undefined) {
+      setCards(JSON.parse(data))
+    }
+  }, []);
 
   const handleClick = (data: any) => {
     if (data !== undefined) {
@@ -128,7 +27,11 @@ function ColleList() {
   };
 
   const handleAddCollection = () => {
-    console.log("Add Collection!");
+    toggleModal();
+  };
+
+  const toggleModal = () => {
+    setModal(!modal);
   };
 
   return (
@@ -140,15 +43,16 @@ function ColleList() {
         </EditIcon>
       </CollectionName>
       <CardListContainer>
-        {cards.map((card, i) => (
+        {cards.map((card: any) => (
           <AniCard
             cardId={card.id}
-            cardTitle={card.title}
+            cardTitle={card.name}
             cardImage={card.image}
             handleClick={handleClick}
           />
         ))}
       </CardListContainer>
+      {modal && <ModalCreate data={cards} setData={setCards} setModal={setModal} />}
     </div>
   );
 }

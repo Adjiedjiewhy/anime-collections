@@ -5,12 +5,12 @@ import { Primary } from "../styles/variables/colors";
 import { IoIosAdd } from "react-icons/io";
 import { useState, useEffect } from "react";
 
-const Modal: React.FC<any> = ({ setModal }) => {
+const ModalAdd: React.FC<any> = ({ setModal }) => {
   const [array, setArray] = useState(Array());
   let storage = Array();
 
   useEffect(() => {
-    const data = window.localStorage.getItem("dwad");
+    const data = window.localStorage.getItem("colleList");
     if (data !== null) {
       console.log("Not Null");
       setArray(JSON.parse(data));
@@ -192,4 +192,4 @@ const PlusIcon = styled(IoIosAdd)`
   margin-right: 8px;
 `;
 
-export default Modal;
+export default ModalAdd;

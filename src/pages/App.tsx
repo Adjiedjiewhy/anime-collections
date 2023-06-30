@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client";
 import anilistClient from "../clients/anilistClient";
 import "../styles/App.css";
+import { useEffect } from "react";
 
 import Header from "../components/Header";
 import AniList from "./AniList";
@@ -10,6 +11,7 @@ import AniDetails from "./AniDetails";
 import Pagination from "../components/Pagination";
 import ColleList from "../components/ColleList";
 import ColleDetail from "../components/ColleDetail";
+import { Colle } from "../models/interfaces";
 
 const App = () => {
   const [shownTotalPages, setShownTotalPage] = useState(0);

@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import styled from "@emotion/styled";
 import { IoIosAdd, IoIosList } from "react-icons/io";
 import { Primary } from "../styles/variables/colors";
-import Modal from "../components/Modal";
+import ModalAdd from "../components/ModalAdd";
 
 function AniDetails() {
   const [modal, setModal] = useState(false);
@@ -54,7 +54,7 @@ function AniDetails() {
         </MovieInfoItem>
       </MovieInfo>
       <MovieDescription>{data.Media.description}</MovieDescription>
-      {modal && <Modal setModal={setModal}/>}
+      {modal && <ModalAdd setModal={setModal}/>}
     </MovieDetailContainer>
   );
 }

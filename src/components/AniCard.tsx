@@ -1,16 +1,13 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useEffect } from "react";
 import { Primary } from "../styles/variables/colors";
 
 const AniCard: React.FC<any> = ({ cardId, cardTitle, cardImage, handleClick }) => {
   return (
     <Card onClick={() => handleClick(cardId)}>
-      <CardImage src={cardImage} alt="Card Image 1" />
+      <CardImage src={cardImage} alt="Card Image" />
       <CardTitle>
         {cardTitle}
-        {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. */}
       </CardTitle>
     </Card>
   );
@@ -47,7 +44,6 @@ const Card = styled.div`
     width: 100%;
     height: 25%;
     background: linear-gradient(to bottom, transparent, black 75%);
-    z-index: 1;
   }
 `;
 
@@ -67,7 +63,6 @@ const CardTitle = styled.div`
   color: white;
   font-size: 16px;
   font-weight: bold;
-  z-index: 2;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
