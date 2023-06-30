@@ -5,12 +5,14 @@ import AniCard from "./AniCard";
 import { useNavigate } from "react-router-dom";
 import { IoIosAdd } from "react-icons/io";
 import ModalCreate from "./ModalCreate";
+import ModalRemove from "./ModalRemove";
 import defaultCoverImage from "../assets/defaultCoverImage.jpg";
 import { Colle, ColleContent } from "../models/interfaces";
 
 function ColleList() {
   const navigation = useNavigate();
   const [modal, setModal] = useState(false);
+  const [removeModal, setRemoveModal] = useState(false);
   const [cards, setCards] = useState(Array);
 
   useEffect(() => {
@@ -38,12 +40,13 @@ function ColleList() {
     const removeIndex = tempArr.findIndex(
       (element) => (element as any).name === data
     );
-    tempArr.splice(removeIndex, 1);
     console.log("TempArr:", tempArr);
     if (tempArr !== undefined && tempArr !== null && tempArr.length > 0) {
       console.log("Data:", cards);
+      tempArr.splice(removeIndex, 1);
       window.localStorage.setItem("colleList", JSON.stringify(tempArr));
       setCards(tempArr);
+      setRemoveModal(false);
     }
   };
 
@@ -71,12 +74,19 @@ function ColleList() {
             cardImage={card.image}
             handleClick={handleClick}
             removeBtn={true}
-            removeFunc={handleRemove}
+            removeFunc={() => setRemoveModal(true)}
           />
         ))}
       </CardListContainer>
       {modal && (
         <ModalCreate data={cards} setData={setCards} setModal={setModal} />
+      )}
+      {removeModal && (
+        <ModalRemove
+          setModal={setModal}
+          handleSubmit={handleRemove}
+          handleCancel={() => setRemoveModal(false)}
+        />
       )}
     </div>
   );
