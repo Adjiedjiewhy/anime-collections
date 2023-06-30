@@ -1,14 +1,25 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Primary } from "../styles/variables/colors";
+import { IoIosTrash } from "react-icons/io";
 
-const AniCard: React.FC<any> = ({ cardId, cardTitle, cardImage, handleClick }) => {
+const AniCard: React.FC<any> = ({
+  cardId,
+  cardTitle,
+  cardImage,
+  handleClick,
+  removeBtn,
+  removeFunc,
+}) => {
   return (
-    <Card onClick={() => handleClick(cardId, cardTitle)}>
-      <CardImage src={cardImage} alt="Card Image" />
-      <CardTitle>
-        {cardTitle}
-      </CardTitle>
+    <Card>
+      <CardImage src={cardImage} alt="Card Image" onClick={() => handleClick(cardId, cardTitle)}/>
+      <CardTitle>{cardTitle}</CardTitle>
+      {removeBtn && (
+        <IconContainer onClick={() => removeFunc(cardTitle)}>
+          <IoIosTrash size={24} />
+        </IconContainer>
+      )}
     </Card>
   );
 };
@@ -21,7 +32,7 @@ const Card = styled.div`
   width: 90%;
   max-width: 280px;
   margin: 0 auto;
-  
+
   transition: 0.25s;
   &:hover {
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
@@ -68,6 +79,14 @@ const CardTitle = styled.div`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+const IconContainer = styled.div`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+  color: #fff;
 `;
 
 export default AniCard;

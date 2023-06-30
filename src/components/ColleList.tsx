@@ -5,8 +5,8 @@ import AniCard from "./AniCard";
 import { useNavigate } from "react-router-dom";
 import { IoIosAdd } from "react-icons/io";
 import ModalCreate from "./ModalCreate";
-import defaultCoverImage from "../assets/defaultCoverImage.jpg"
-
+import defaultCoverImage from "../assets/defaultCoverImage.jpg";
+import { Colle, ColleContent } from "../models/interfaces";
 
 function ColleList() {
   const navigation = useNavigate();
@@ -16,7 +16,7 @@ function ColleList() {
   useEffect(() => {
     const data = window.localStorage.getItem("colleList");
     if (data !== null || data != undefined) {
-      setCards(JSON.parse(data))
+      setCards(JSON.parse(data));
     }
   }, []);
 
@@ -30,6 +30,20 @@ function ColleList() {
   const handleClick = (id: any, name: any) => {
     if (name !== undefined) {
       navigation("/colleDetails", { state: { id: name } });
+    }
+  };
+
+  const handleRemove = (data: any) => {
+    let tempArr = cards;
+    const removeIndex = tempArr.findIndex(
+      (element) => (element as any).name === data
+    );
+    tempArr.splice(removeIndex, 1);
+    console.log("TempArr:", tempArr);
+    if (tempArr !== undefined && tempArr !== null && tempArr.length > 0) {
+      console.log("Data:", cards);
+      window.localStorage.setItem("colleList", JSON.stringify(tempArr));
+      setCards(tempArr);
     }
   };
 
@@ -56,10 +70,14 @@ function ColleList() {
             cardTitle={card.name}
             cardImage={card.image}
             handleClick={handleClick}
+            removeBtn={true}
+            removeFunc={handleRemove}
           />
         ))}
       </CardListContainer>
-      {modal && <ModalCreate data={cards} setData={setCards} setModal={setModal} />}
+      {modal && (
+        <ModalCreate data={cards} setData={setCards} setModal={setModal} />
+      )}
     </div>
   );
 }
