@@ -5,15 +5,20 @@ import { Primary } from "../styles/variables/colors";
 import { IoIosAdd } from "react-icons/io";
 import { useState, useEffect } from "react";
 import defaultCoverImage from "../assets/defaultCoverImage.jpg";
+import { Colle, ColleContent } from "../models/interfaces";
 
-const ModalCreate: React.FC<any> = ({ data, setData, setModal, imageSrc }) => {
+const ModalCreate: React.FC<any> = ({ data, setData, setModal, animeData }) => {
   const [input, setInput] = useState("");
+  const [storageData, setStorageData] = useState(Array());
 
   useEffect(() => {
-    if (data !== null || data != undefined) {
-      window.localStorage.setItem("colleList", JSON.stringify(data));
+    const storage = window.localStorage.getItem("colleList");
+    console.log("Storage:", storage);
+    if (storage !== null && storage !== undefined) {
+      setStorageData(JSON.parse(storage));
+      console.log("SD0:", storage);
     }
-  }, [data]);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -22,12 +27,39 @@ const ModalCreate: React.FC<any> = ({ data, setData, setModal, imageSrc }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let newData = {
-      id: data.length,
+      id: data ? data.length : storageData ? storageData.length : 0,
       name: input,
-      image: imageSrc ? imageSrc : defaultCoverImage,
-      data: [],
+      image: animeData ? animeData.coverImage.large : defaultCoverImage,
+      data: animeData
+        ? [
+            {
+              id: animeData.id,
+              title: animeData.title.english,
+              coverImage: animeData.coverImage.large,
+            },
+          ]
+        : [],
     };
-    setData([...data, newData]);
+    console.log("newData:", newData);
+    console.log("SD1", storageData);
+    if (data !== undefined) {
+      console.log("1");
+      setData([...data, newData]);
+    } else if (storageData !== undefined && storageData !== null) {
+      console.log("2");
+      storageData.push(newData);
+      console.log("SD2:", storageData);
+      if (newData !== null && newData !== undefined) {
+        window.localStorage.setItem("colleList", JSON.stringify(storageData));
+      }
+    } else {
+      console.log("3");
+      console.log("newData:", newData);
+      if (newData !== null && newData !== undefined) {
+        window.localStorage.setItem("colleList", JSON.stringify([newData]));
+      }
+    }
+    setModal(false);
   };
 
   return (

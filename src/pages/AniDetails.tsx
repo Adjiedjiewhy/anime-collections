@@ -6,10 +6,12 @@ import styled from "@emotion/styled";
 import { IoIosAdd, IoIosList } from "react-icons/io";
 import { Primary } from "../styles/variables/colors";
 import ModalAdd from "../components/ModalAdd";
+import ModalCreate from "../components/ModalCreate";
 import { Colle, ColleContent } from "../models/interfaces";
 
 function AniDetails() {
   const [modal, setModal] = useState(false);
+  const [createModal, setCreateModal] = useState(false);
   const [colleData, setColleData] = useState(Array());
 
   const toggleModal = () => {
@@ -87,6 +89,13 @@ function AniDetails() {
           handleAddAnime={handleAddAnime}
           colleData={colleData}
           setColleData={setColleData}
+          setCreateModal={setCreateModal}
+        />
+      )}
+      {createModal && (
+        <ModalCreate
+        setModal={setCreateModal}
+        animeData={data.Media}
         />
       )}
     </MovieDetailContainer>

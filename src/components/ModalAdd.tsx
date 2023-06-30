@@ -5,7 +5,7 @@ import { Primary } from "../styles/variables/colors";
 import { IoIosAdd } from "react-icons/io";
 import { useState, useEffect } from "react";
 
-const ModalAdd: React.FC<any> = ({ setModal, handleAddAnime, colleData, setColleData }) => {
+const ModalAdd: React.FC<any> = ({ setModal, handleAddAnime, colleData, setColleData, setCreateModal }) => {
   let collections = Array();
 
   useEffect(() => {
@@ -23,9 +23,14 @@ const ModalAdd: React.FC<any> = ({ setModal, handleAddAnime, colleData, setColle
     }
   };
 
+  const handleCreate = () =>{
+    console.log("Create");
+    setModal(false);
+    setCreateModal(true)
+  }
+
   const handleSubmit = () => {
     handleAddAnime(collections);
-    // window.localStorage.setItem("dwad", JSON.stringify(storage));
     setModal(false);
   };
 
@@ -41,7 +46,7 @@ const ModalAdd: React.FC<any> = ({ setModal, handleAddAnime, colleData, setColle
           </ModalRow>
           <ModalRow>
             <ModalBody>
-              <CheckboxContainer>
+              <CheckboxContainer onClick={handleCreate}>
                 <PlusIcon />
                 <ContentText>Create a new collection</ContentText>
               </CheckboxContainer>

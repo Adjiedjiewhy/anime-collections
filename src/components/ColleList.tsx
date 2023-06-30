@@ -20,6 +20,13 @@ function ColleList() {
     }
   }, []);
 
+  useEffect(() => {
+    if (cards !== undefined && cards !== null && cards.length > 0) {
+      console.log("Data:", cards);
+      window.localStorage.setItem("colleList", JSON.stringify(cards));
+    }
+  }, [cards]);
+
   const handleClick = (id: any, name: any) => {
     if (name !== undefined) {
       navigation("/colleDetails", { state: { id: name } });
