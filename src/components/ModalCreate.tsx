@@ -24,34 +24,40 @@ const ModalCreate: React.FC<any> = ({ data, setData, setModal, animeData }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let newData = {
-      id: data ? data.length : storageData ? storageData.length : 0,
-      name: input,
-      image: animeData ? animeData.coverImage.large : defaultCoverImage,
-      data: animeData
-        ? [
-            {
-              id: animeData.id,
-              title: animeData.title.english,
-              coverImage: animeData.coverImage.large,
-            },
-          ]
-        : [],
-    };
-
-    if (data !== undefined) {
-      setData([...data, newData]);
-    } else if (storageData !== undefined && storageData !== null) {
-      storageData.push(newData);
-      if (newData !== null && newData !== undefined) {
-        window.localStorage.setItem("colleList", JSON.stringify(storageData));
-      }
+    const format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    if (format.test(input)) {
+      console.log("NO SPECIAL CHARS");
+      setModal(false);
     } else {
-      if (newData !== null && newData !== undefined) {
-        window.localStorage.setItem("colleList", JSON.stringify([newData]));
+      let newData = {
+        id: data ? data.length : storageData ? storageData.length : 0,
+        name: input,
+        image: animeData ? animeData.coverImage.large : defaultCoverImage,
+        data: animeData
+          ? [
+              {
+                id: animeData.id,
+                title: animeData.title.english,
+                coverImage: animeData.coverImage.large,
+              },
+            ]
+          : [],
+      };
+
+      if (data !== undefined) {
+        setData([...data, newData]);
+      } else if (storageData !== undefined && storageData !== null) {
+        storageData.push(newData);
+        if (newData !== null && newData !== undefined) {
+          window.localStorage.setItem("colleList", JSON.stringify(storageData));
+        }
+      } else {
+        if (newData !== null && newData !== undefined) {
+          window.localStorage.setItem("colleList", JSON.stringify([newData]));
+        }
       }
+      setModal(false);
     }
-    setModal(false);
   };
 
   return (
